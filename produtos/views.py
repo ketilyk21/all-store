@@ -1,0 +1,23 @@
+from django.shortcuts import render
+
+
+def index(request):
+    ...
+
+def product_create(request):
+    ...
+
+def product_update(request):
+    ...
+
+def product_delete(request):
+    ...
+
+def user_register(request):
+    ...
+
+def user_login(request):
+    ...
+
+def user_logout(request):
+    ...
