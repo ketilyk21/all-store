@@ -1,8 +1,13 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect, render
+
+from .models import Categoria, Produto
 
 
 def index(request):
-    return render(request, "index.html")
+    categorias = Categoria.objects.all() 
+    produtos = Produto.objects.all() 
+    context = {'categorias': categorias, 'produtos': produtos}
+    return render(request, "index.html", context)
 
 
 def product_create(request):
@@ -26,3 +31,4 @@ def user_login(request):
 
 
 def user_logout(request): ...
+ 
