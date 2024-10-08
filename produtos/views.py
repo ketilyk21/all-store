@@ -1,6 +1,6 @@
-from django.shortcuts import redirect, render, get_object_or_404
-from .forms import ProdutoForm
+from django.shortcuts import get_object_or_404, redirect, render
 
+from .forms import ProdutoForm
 from .models import Categoria, Produto
 
 
@@ -9,6 +9,18 @@ def index(request):
     produtos = Produto.objects.all()
     context = {"categorias": categorias, "produtos": produtos}
     return render(request, "index.html", context)
+
+
+def produto_detalhes(request, id):
+    produto = get_object_or_404(Produto, id=id)
+    parcela = f"{produto.preco / 12:.2f}"
+    preco = f"{produto.preco:.2f}"
+
+    return render(request, "produto_detalhes.html",
+                   {"produto": produto,
+                    "parcela": parcela,  
+                    "preco": preco,
+                    })
 
 
 def product_create(request):
@@ -31,7 +43,7 @@ def product_update(request, id):
         form = ProdutoForm(request.POST, instance=produto)
         if form.is_valid():
             form.save()
-        return redirect("index")
+        return redirect("produto_detalhes", id)
 
     return render(request, "produto_form.html", {"form": form})
 

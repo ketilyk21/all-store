@@ -1,3 +1,54 @@
 .sub-header {
     margin-top: 3rem;
 }
+
+.produto-detail {
+    width: 100%;
+    margin: 3rem auto;
+    margin-bottom: 5rem;
+    padding: 2rem 0;
+    padding-bottom: 4rem;
+    background: rgb(250, 247, 247);
+}
+
+.img-detalhes {
+    width: 300px;
+}
+
+.produto-nome {
+    text-align: center;
+}
+
+.middle {
+    display: flex;
+    margin-top: 2rem;
+    justify-content: center;
+    gap: 5rem;
+}
+
+.texto {
+    margin: 0;
+    padding: 0;
+}
+
+hr {
+    margin-top: 0.3rem;
+}
+
+.descricao {
+    margin-top: 2.2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 0.5rem;
+}
+
+.preco {
+    font-size: 2rem;
+    margin-bottom: 0.3rem;
+}
+
+.content {
+    width: 70%;
+    margin: 0 auto;
+}

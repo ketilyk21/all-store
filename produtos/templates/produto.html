@@ -6,6 +6,6 @@
     <div class="card-body">
         <h5 class="card-title">{{ produto.nome }}</h5>
         <p class="card-text">R$ {{ produto.preco }}</p>
-        <a href="#" class="btn btn-primary btn-details">Ver Detalhes</a>
+        <a href="{% url 'produto_detalhes' id=produto.id %}" class="btn btn-primary btn-details">Ver Detalhes</a>
     </div>
 </div>
