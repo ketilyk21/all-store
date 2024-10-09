@@ -3,10 +3,13 @@ from django.urls import path
 from produtos import views
 
 urlpatterns = [
-    path('', views.index, name='index'),
-    path('produtos/detalhes/<int:id>/', views.produto_detalhes, name="produto_detalhes"),
-    path('produtos/criar/', views.product_create, name='product_create'),
-    path('produtos/atualizar/<int:id>/', views.product_update, name='product_update'),
-    path('produtos/deletar/<int:id>/', views.product_delete, name='product_delete'),
-    path('usuario/registrar/', views.user_register, name='user_register'),
+    path("", views.index, name="index"),
+    path(
+        "produtos/detalhes/<int:id>/", views.produto_detalhes, name="produto_detalhes"
+    ),
+    path("produtos/criar/", views.product_create, name="product_create"),
+    path("produtos/atualizar/<int:id>/", views.product_update, name="product_update"),
+    path("produtos/deletar/<int:id>/", views.product_delete, name="product_delete"),
+    path("usuario/registrar/", views.user_register, name="register"),
+    path("usuario/login/", views.user_login, name="login"),
 ]

@@ -1,0 +1,40 @@
+{% extends 'global/base.html' %}
+
+
+
+{% block title %} Register {% endblock title %}
+
+
+{% block content %}
+<div class="container mt-5 container-form">
+    <h2 class="text-center mb-4">Crie sua conta</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="nome" class="form-label">Nome</label>
+            {{ form.first_name }}
+        </div>
+        <div class="mb-3">
+            <label for="sobrenome" class="form-label">Sobrenome</label>
+            {{ form.last_name }}
+        </div>
+        <div class="mb-3">
+            <label for="usuario" class="form-label">Usuário</label>
+            {{ form.username }}
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            {{ form.email }}
+        </div>
+        <div class="mb-3">
+            <label for="senha" class="form-label">Senha</label>
+            {{ form.password }}
+        </div>
+        <div class="mb-3">
+            <label for="confirma-senha" class="form-label">Confirme sua senha</label>
+            {{ form.password2 }}
+        </div>
+        <button type="submit" class="btn btn-primary">Criar conta</button>
+    </form>
+</div>
+{% endblock content %}

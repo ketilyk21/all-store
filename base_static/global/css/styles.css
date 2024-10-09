@@ -52,3 +52,12 @@ hr {
     width: 70%;
     margin: 0 auto;
 }
+
+.container-form {
+    width: 50%;
+    margin-bottom: 10%;
+}
+
+.container-login {
+    margin-bottom: 10%;
+}

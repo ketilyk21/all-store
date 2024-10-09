@@ -1,6 +1,9 @@
 from django.shortcuts import get_object_or_404, redirect, render
-
-from .forms import ProdutoForm
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.models import User
+from rolepermissions.decorators import has_role_decorator
+from rolepermissions.roles import assign_role
+from .forms import ProdutoForm, RegisterForm
 from .models import Categoria, Produto
 
 
@@ -16,13 +19,18 @@ def produto_detalhes(request, id):
     parcela = f"{produto.preco / 12:.2f}"
     preco = f"{produto.preco:.2f}"
 
-    return render(request, "produto_detalhes.html",
-                   {"produto": produto,
-                    "parcela": parcela,  
-                    "preco": preco,
-                    })
+    return render(
+        request,
+        "produto_detalhes.html",
+        {
+            "produto": produto,
+            "parcela": parcela,
+            "preco": preco,
+        },
+    )
 
 
+@has_role_decorator("Admin")
 def product_create(request):
     if request.method == "GET":
         form = ProdutoForm()
@@ -35,6 +43,7 @@ def product_create(request):
     return render(request, "produto_form.html", {"form": form})
 
 
+@has_role_decorator("Admin")
 def product_update(request, id):
     produto = get_object_or_404(Produto, id=id)
     if request.method == "GET":
@@ -48,6 +57,7 @@ def product_update(request, id):
     return render(request, "produto_form.html", {"form": form})
 
 
+@has_role_decorator("Admin")
 def product_delete(request, id):
     produto = get_object_or_404(Produto, id=id)
     produto.delete()
@@ -55,11 +65,46 @@ def product_delete(request, id):
 
 
 def user_register(request):
-    return render(request, "user_form.html")
+    if request.method == "GET":
+        form = RegisterForm()
+    elif request.method == "POST":
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            # Obtem os dados enviados no form
+            first_name = form.data.get("first_name")
+            last_name = form.data.get("last_name")
+            username = form.data.get("username")
+            email = form.data.get("email")
+            password = form.data.get("password")
+
+            # Registra o Usuário atribuindo o mesmo ao grupo 'Client' criado com rolepermissions.
+            user = User.objects.create_user(
+                first_name=first_name,
+                last_name=last_name,
+                username=username,
+                password=password,
+                email=email,
+            )
+            user.save()
+            return redirect("login")
+
+    return render(request, "user_form.html", {"form": form})
 
 
 def user_login(request):
-    return render(request, "user_form.html")
+    if request.method == "POST":
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+
+        user = authenticate(username=username, password=password)
+
+        if user:
+            login(request, user)
+            return redirect("index")
+    return render(
+        request,
+        "login.html",
+    )
 
 
 def user_logout(request): ...
