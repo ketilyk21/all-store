@@ -1,16 +1,21 @@
-from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
+from django.shortcuts import get_object_or_404, redirect, render
 from rolepermissions.decorators import has_role_decorator
-from rolepermissions.roles import assign_role
+
+from produtos.utils.pagination import make_pagination
+
 from .forms import ProdutoForm, RegisterForm
 from .models import Categoria, Produto
 
+PER_PAGE = 12
 
 def index(request):
     categorias = Categoria.objects.all()
     produtos = Produto.objects.all()
-    context = {"categorias": categorias, "produtos": produtos}
+    page_obj, pagination = make_pagination(produtos, PER_PAGE, request)
+    context = {"categorias": categorias, "produtos": page_obj, "pagination": pagination}
+
     return render(request, "index.html", context)
 
 
