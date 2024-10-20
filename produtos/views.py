@@ -13,7 +13,7 @@ PER_PAGE = 12
 
 def index(request):
     categorias = Categoria.objects.all()
-    produtos = Produto.objects.all()
+    produtos = Produto.objects.all().order_by('-id')
     page_obj, pagination = make_pagination(produtos, PER_PAGE, request)
     context = {"categorias": categorias, "produtos": page_obj, "pagination": pagination}
 
