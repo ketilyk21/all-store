@@ -55,7 +55,7 @@ def product_update(request, id):
     if request.method == "GET":
         form = ProdutoForm(instance=produto)
     elif request.method == "POST":
-        form = ProdutoForm(request.POST, instance=produto)
+        form = ProdutoForm(request.POST, request.FILES,instance=produto)
         if form.is_valid():
             form.save()
         return redirect("produto_detalhes", id)
