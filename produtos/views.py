@@ -135,3 +135,20 @@ def product_search(request):
                        "search_page": search_page,
                    }
                 )
+
+
+def category_filter(request):
+    categorias = Categoria.objects.all()
+    category_id = request.GET.get("categoria_id")
+    category_products = Produto.objects.filter(
+        categoria__id=category_id,
+    )
+    category_filter = True
+
+    return render(request, "index.html", 
+                {
+                    "category_products": category_products,
+                    "category_filter": category_filter,
+                    "categorias": categorias,
+                },
+    )

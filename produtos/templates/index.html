@@ -14,7 +14,7 @@
     <div class="container">
         <div class="row align-items-center">
             <div class="col-md-6 mb-3 mb-md-0">
-                <select class="form-select" style="width: 100%;">
+                <select class="form-select w-100"        onchange="filtrarPorCategoria(this)">
                     <option selected>Filtrar por Categoria</option>
                     {% for categoria in categorias %}
                     <option value="{{ categoria.id }}">{{ categoria.nome }}</option>
@@ -46,7 +46,15 @@
             {% empty %}
                 <h1 class="w-100 text-center my-5">Nenhum produto foi encontrado...</h1>
             {% endfor %}
-
+        
+        {% elif category_filter %}
+            {% for produto in category_products %}
+                <div class="col">
+                    {% include 'produto.html' %}
+                </div>
+            {% empty %}
+                <h1 class="w-100 text-center my-5">Nenhum produto foi encontrado...</h1>
+            {% endfor %}
         {% else %}
             {% for produto in produtos %}
                 <div class="col">
