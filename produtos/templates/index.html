@@ -35,7 +35,7 @@
     </div>
 </div>
 
-<div class="container mt-4">
+<div class="container mt-4 p-0 mb-5">
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
         
         {% if search_page %}
@@ -46,7 +46,6 @@
             {% empty %}
                 <h1 class="w-100 text-center my-5">Nenhum produto foi encontrado...</h1>
             {% endfor %}
-        
         {% elif category_filter %}
             {% for produto in category_products %}
                 <div class="col">
@@ -64,8 +63,5 @@
         {% endif %}
     </div>
 </div>
-
-{% include 'global/partials/pagination.html' %}
-
 
 {% endblock content %}
