@@ -37,11 +37,23 @@
 
 <div class="container mt-4">
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
-        {% for produto in produtos %}
-        <div class="col">
-            {% include 'produto.html' %}
-        </div>
-        {% endfor %}
+        
+        {% if search_page %}
+            {% for produto in query %}
+                <div class="col">
+                    {% include 'produto.html' %}
+                </div>
+            {% empty %}
+                <h1 class="w-100 text-center my-5">Nenhum produto foi encontrado...</h1>
+            {% endfor %}
+
+        {% else %}
+            {% for produto in produtos %}
+                <div class="col">
+                    {% include 'produto.html' %}
+                </div>
+            {% endfor %}
+        {% endif %}
     </div>
 </div>
 

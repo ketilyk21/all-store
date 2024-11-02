@@ -1,6 +1,7 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
 from rolepermissions.decorators import has_role_decorator
 
@@ -117,3 +118,20 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return redirect('login')
+
+
+def product_search(request):
+    products = Produto.objects.all()
+    q = request.GET.get('q', '').strip()
+    term = " ".join(q.split())
+    search_page = True
+    query = products.filter(
+        Q(nome__icontains=term)
+    )
+
+    return render(request, "index.html",
+                   {
+                       "query": query,
+                       "search_page": search_page,
+                   }
+                )
