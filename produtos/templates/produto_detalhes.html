@@ -34,7 +34,13 @@
                     <p>Em até 12x de R$ {{ parcela }} sem juros</p>
                 </div>
 
-                <button class="btn btn-primary" type="submit">Comprar agora</button>
+                {% if produto.estoque > 0 %}
+                    <a href="{% url 'produto_comprar' id=produto.id %}" class="btn btn-primary" type="submit">
+                    Comprar agora
+                    </a>
+                {% else %}
+                    <h3 class="text-danger fs-5">Produto sem estoque..</h3>
+                {% endif %}
             </div>
         </div>
     </div>

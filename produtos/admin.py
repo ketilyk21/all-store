@@ -6,3 +6,4 @@ from . import models
 
 admin.site.register(models.Produto)
 admin.site.register(models.Categoria)
+admin.site.register(models.Pedido)

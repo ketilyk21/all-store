@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -8,7 +9,7 @@ from rolepermissions.decorators import has_role_decorator
 from produtos.utils.pagination import make_pagination
 
 from .forms import ProdutoForm, RegisterForm
-from .models import Categoria, Produto
+from .models import Categoria, Pedido, Produto
 
 PER_PAGE = 12
 
@@ -152,3 +153,25 @@ def category_filter(request):
                     "categorias": categorias,
                 },
     )
+
+def compra(request, id):
+    try:
+        produto = Produto.objects.get(id=id)
+        produto.estoque -= 1
+        produto.save()
+
+
+        # Registrar o pedido
+        pedido = Pedido.objects.create(
+            cliente=request.user,
+            produto=produto,
+            valor=produto.preco,
+        )
+
+        pedido.save()
+        messages.success(request, "Compra realizada com sucesso!")
+
+    except Exception as e:
+        messages.error(request, "Erro ao realizar a compra!", e)
+
+    return redirect("produto_detalhes", id)
