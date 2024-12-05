@@ -1,38 +1,70 @@
 {% extends 'global/base.html' %}
 
-
-
 {% block title %} Register {% endblock title %}
-
 
 {% block content %}
 <div class="container mt-5 container-form">
     <h2 class="text-center mb-4">Crie sua conta</h2>
     <form method="post">
         {% csrf_token %}
+        {% if form.non_field_errors %}
+            <div class="alert alert-danger">
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
         <div class="mb-3">
             <label for="nome" class="form-label">Nome</label>
             {{ form.first_name }}
+            {% if form.first_name.errors %}
+                <div class="text-danger small">
+                    {{ form.first_name.errors|join:", " }}
+                </div>
+            {% endif %}
         </div>
         <div class="mb-3">
             <label for="sobrenome" class="form-label">Sobrenome</label>
             {{ form.last_name }}
+            {% if form.last_name.errors %}
+                <div class="text-danger small">
+                    {{ form.last_name.errors|join:", " }}
+                </div>
+            {% endif %}
         </div>
         <div class="mb-3">
             <label for="usuario" class="form-label">Usuário</label>
             {{ form.username }}
+            {% if form.username.errors %}
+                <div class="text-danger small">
+                    {{ form.username.errors|join:", " }}
+                </div>
+            {% endif %}
         </div>
         <div class="mb-3">
             <label for="email" class="form-label">Email</label>
             {{ form.email }}
+            {% if form.email.errors %}
+                <div class="text-danger small">
+                    {{ form.email.errors|join:", " }}
+                </div>
+            {% endif %}
         </div>
         <div class="mb-3">
             <label for="senha" class="form-label">Senha</label>
             {{ form.password }}
+            {% if form.password.errors %}
+                <div class="text-danger small">
+                    {{ form.password.errors|join:", " }}
+                </div>
+            {% endif %}
         </div>
         <div class="mb-3">
             <label for="confirma-senha" class="form-label">Confirme sua senha</label>
             {{ form.password2 }}
+            {% if form.password2.errors %}
+                <div class="text-danger small">
+                    {{ form.password2.errors|join:", " }}
+                </div>
+            {% endif %}
         </div>
         <button type="submit" class="btn btn-primary">Criar conta</button>
     </form>

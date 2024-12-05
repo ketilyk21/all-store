@@ -2,7 +2,6 @@
 
 {% block title %} Home {% endblock title %}
 
-
 {% block content %}
 <div class="container mt-5">
     <div class="row justify-content-center">
@@ -11,33 +10,68 @@
                 <h2 class="mb-4 text-center">Criar Produto</h2>
                 <form method="post" enctype="multipart/form-data">
                     {% csrf_token %}
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger">
+                            {{ form.non_field_errors }}
+                        </div>
+                    {% endif %}
                     <div class="row mb-4">
                         <div class="col-md-6">
                             <label for="productName" class="form-label">Nome</label>
                             {{ form.nome }}
+                            {% if form.nome.errors %}
+                                <div class="text-danger small">
+                                    {{ form.nome.errors|join:", " }}
+                                </div>
+                            {% endif %}
                         </div>
                         <div class="col-md-6">
                             <label for="productPrice" class="form-label">Preço</label>
                             {{ form.preco }}
+                            {% if form.preco.errors %}
+                                <div class="text-danger small">
+                                    {{ form.preco.errors|join:", " }}
+                                </div>
+                            {% endif %}
                         </div>
                     </div>
                     <div class="form-group mb-4">
                         <label for="productDescription" class="form-label">Descrição</label>
                         {{ form.descricao }}
+                        {% if form.descricao.errors %}
+                            <div class="text-danger small">
+                                {{ form.descricao.errors|join:", " }}
+                            </div>
+                        {% endif %}
                     </div>
                     <div class="row mb-4">
                         <div class="col-md-6">
                             <label for="productCategory" class="form-label">Categoria</label>
                             {{ form.categoria }}
+                            {% if form.categoria.errors %}
+                                <div class="text-danger small">
+                                    {{ form.categoria.errors|join:", " }}
+                                </div>
+                            {% endif %}
                         </div>
                         <div class="col-md-6">
-                            <label for="productEstoque" class="form-label">Quantidade em estoque</label> 
+                            <label for="productEstoque" class="form-label">Quantidade em estoque</label>
                             {{ form.estoque }}
+                            {% if form.estoque.errors %}
+                                <div class="text-danger small">
+                                    {{ form.estoque.errors|join:", " }}
+                                </div>
+                            {% endif %}
                         </div>
                     </div>
                     <div class="form-group mb-4">
                         <label for="productImage" class="form-label">Imagem</label>
                         {{ form.imagem }}
+                        {% if form.imagem.errors %}
+                            <div class="text-danger small">
+                                {{ form.imagem.errors|join:", " }}
+                            </div>
+                        {% endif %}
                     </div>
                     <div class="text-center">
                         <button type="submit" class="btn btn-primary">Cadastrar Produto</button>

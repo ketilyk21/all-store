@@ -114,6 +114,8 @@ def user_login(request):
             login(request, user)
             messages.success(request, "Login realizado com sucesso!")
             return redirect("index")
+        else:
+            messages.error(request, "Usuário ou senha incorretos!")
     return render(
         request,
         "login.html",
