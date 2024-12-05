@@ -13,6 +13,7 @@ class Produto(models.Model):
     nome = models.CharField(max_length=100)
     descricao = models.CharField(max_length=150)
     preco = models.FloatField()
+    estoque = models.PositiveIntegerField(default=0)
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
     imagem = models.ImageField(upload_to="products/covers/%Y/%m/%d/", blank=True, default="")
 
