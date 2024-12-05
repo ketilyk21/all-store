@@ -25,9 +25,15 @@
                         <label for="productDescription" class="form-label">Descrição</label>
                         {{ form.descricao }}
                     </div>
-                    <div class="form-group mb-4">
-                        <label for="productCategory" class="form-label">Categoria</label>
-                        {{ form.categoria }}
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <label for="productCategory" class="form-label">Categoria</label>
+                            {{ form.categoria }}
+                        </div>
+                        <div class="col-md-6">
+                            <label for="productEstoque" class="form-label">Quantidade em estoque</label> 
+                            {{ form.estoque }}
+                        </div>
                     </div>
                     <div class="form-group mb-4">
                         <label for="productImage" class="form-label">Imagem</label>

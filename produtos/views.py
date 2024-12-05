@@ -46,6 +46,7 @@ def product_create(request):
         form = ProdutoForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
+            messages.success(request, "Produto criado com sucesso!")
             return redirect("index")
 
     return render(request, "produto_form.html", {"form": form})
@@ -60,6 +61,7 @@ def product_update(request, id):
         form = ProdutoForm(request.POST, request.FILES,instance=produto)
         if form.is_valid():
             form.save()
+            messages.success(request, "Produto atualizado com sucesso!")
         return redirect("produto_detalhes", id)
 
     return render(request, "produto_form.html", {"form": form})
@@ -69,6 +71,7 @@ def product_update(request, id):
 def product_delete(request, id):
     produto = get_object_or_404(Produto, id=id)
     produto.delete()
+    messages.success(request, "Produto deletado com sucesso!")
     return redirect("index")
 
 
@@ -94,6 +97,7 @@ def user_register(request):
                 email=email,
             )
             user.save()
+            messages.success(request, "Usuário criado com sucesso!")
             return redirect("login")
 
     return render(request, "user_form.html", {"form": form})
@@ -108,6 +112,7 @@ def user_login(request):
 
         if user:
             login(request, user)
+            messages.success(request, "Login realizado com sucesso!")
             return redirect("index")
     return render(
         request,
@@ -118,6 +123,7 @@ def user_login(request):
 @login_required(login_url="login")
 def user_logout(request):
     logout(request)
+    messages.success(request, "Logout realizado com sucesso!")
     return redirect('login')
 
 
@@ -171,7 +177,7 @@ def compra(request, id):
         pedido.save()
         messages.success(request, "Compra realizada com sucesso!")
 
-    except Exception as e:
-        messages.error(request, "Erro ao realizar a compra!", e)
+    except Exception:
+        messages.error(request, "Erro ao realizar a compra!")
 
     return redirect("produto_detalhes", id)
