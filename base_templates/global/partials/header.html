@@ -11,9 +11,8 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <form class="d-flex mx-auto search-form"
-                      action="{% url 'search' %}">
-                    <input class="form-control me-2" type="search" placeholder="Pesquisar" aria-label="Pesquisar" name="q">
+                <form class="d-flex mx-auto search-form" id="searchForm" action="{% url 'search' %}">
+                    <input class="form-control me-2" type="search" placeholder="Pesquisar" aria-label="Pesquisar" name="q" value="{{ request.GET.q }}">
                     <button class="btn btn-outline-success" type="submit">Buscar</button>
                 </form>
 

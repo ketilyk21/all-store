@@ -39,7 +39,7 @@
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
         
         {% if search_page %}
-            {% for produto in query %}
+            {% for produto in produtos %}
                 <div class="col">
                     {% include 'produto.html' %}
                 </div>
@@ -47,7 +47,7 @@
                 <h1 class="w-100 text-center my-5">Nenhum produto foi encontrado...</h1>
             {% endfor %}
         {% elif category_filter %}
-            {% for produto in category_products %}
+            {% for produto in produtos %}
                 <div class="col">
                     {% include 'produto.html' %}
                 </div>

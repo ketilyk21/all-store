@@ -75,6 +75,69 @@ def product_delete(request, id):
     return redirect("index")
 
 
+def product_search(request):
+    products = Produto.objects.all()
+    categorias = Categoria.objects.all()
+    q = request.GET.get('q', '').strip()
+    term = " ".join(q.split())
+    search_page = True
+    query = products.filter(
+        Q(nome__icontains=term)
+    )
+
+    page_obj, pagination = make_pagination(query, PER_PAGE, request)
+
+    return render(request, "index.html",
+                   {
+                       "produtos": page_obj,
+                       "pagination": pagination,
+                       "search_page": search_page,
+                       "categorias": categorias,
+                   }
+                )
+
+
+def category_filter(request):
+    categorias = Categoria.objects.all()
+    category_id = request.GET.get("categoria_id")
+    category_products = Produto.objects.filter(
+        categoria__id=category_id,
+    )
+    category_filter = True
+    page_obj, pagination = make_pagination(category_products, PER_PAGE, request)
+
+    return render(request, "index.html", 
+                {
+                    "produtos": page_obj,
+                    "pagination": pagination,
+                    "category_filter": category_filter,
+                    "categorias": categorias,
+                },
+    )
+
+def compra(request, id):
+    try:
+        produto = Produto.objects.get(id=id)
+        produto.estoque -= 1
+        produto.save()
+
+
+        # Registrar o pedido
+        pedido = Pedido.objects.create(
+            cliente=request.user,
+            produto=produto,
+            valor=produto.preco,
+        )
+
+        pedido.save()
+        messages.success(request, "Compra realizada com sucesso!")
+
+    except Exception:
+        messages.error(request, "Erro ao realizar a compra!")
+
+    return redirect("produto_detalhes", id)
+
+
 def user_register(request):
     if request.method == "GET":
         form = RegisterForm()
@@ -127,59 +190,3 @@ def user_logout(request):
     logout(request)
     messages.success(request, "Logout realizado com sucesso!")
     return redirect('login')
-
-
-def product_search(request):
-    products = Produto.objects.all()
-    q = request.GET.get('q', '').strip()
-    term = " ".join(q.split())
-    search_page = True
-    query = products.filter(
-        Q(nome__icontains=term)
-    )
-
-    return render(request, "index.html",
-                   {
-                       "query": query,
-                       "search_page": search_page,
-                   }
-                )
-
-
-def category_filter(request):
-    categorias = Categoria.objects.all()
-    category_id = request.GET.get("categoria_id")
-    category_products = Produto.objects.filter(
-        categoria__id=category_id,
-    )
-    category_filter = True
-
-    return render(request, "index.html", 
-                {
-                    "category_products": category_products,
-                    "category_filter": category_filter,
-                    "categorias": categorias,
-                },
-    )
-
-def compra(request, id):
-    try:
-        produto = Produto.objects.get(id=id)
-        produto.estoque -= 1
-        produto.save()
-
-
-        # Registrar o pedido
-        pedido = Pedido.objects.create(
-            cliente=request.user,
-            produto=produto,
-            valor=produto.preco,
-        )
-
-        pedido.save()
-        messages.success(request, "Compra realizada com sucesso!")
-
-    except Exception:
-        messages.error(request, "Erro ao realizar a compra!")
-
-    return redirect("produto_detalhes", id)
