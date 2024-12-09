@@ -16,4 +16,8 @@ urlpatterns = [
     path("usuario/registrar/", views.user_register, name="register"),
     path("usuario/login/", views.user_login, name="login"),
     path("usuario/logout/", views.user_logout, name="logout"),
+    path("pedidos/gerenciar/", views.listar_pedidos, name="listar_pedidos"),
+    path("pedidos/admin/deletar/<int:id>/", views.pedidos_deletar, name="pedidos_deletar"),
+    path("pedidos/", views.meus_pedidos, name="meus_pedidos"),
+    path("pedidos/deletar/<int:id>/", views.deletar_meus_pedidos, name="deletar_meus_pedidos"),
 ]

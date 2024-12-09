@@ -2,6 +2,14 @@
     margin-top: 3rem;
 }
 
+html, body {
+    height: 100%;
+}
+
+.content-wrapper {
+    flex: 1; 
+}
+
 .produto-detail {
     width: 100%;
     margin: 3rem auto;

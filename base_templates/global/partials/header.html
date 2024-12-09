@@ -26,6 +26,7 @@
                             <ul class="dropdown-menu shadow" aria-labelledby="profileDropdown">
                                 
                                 {% if user.is_authenticated %}
+                                    <li><a class="dropdown-item" href="{% url 'meus_pedidos' %}">Meus Pedidos</a></li>
                                     <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
                                 {% else %}
                                     <li><a class="dropdown-item" href="{% url 'login' %}">Login</a></li>

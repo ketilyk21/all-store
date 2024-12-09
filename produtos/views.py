@@ -190,3 +190,26 @@ def user_logout(request):
     logout(request)
     messages.success(request, "Logout realizado com sucesso!")
     return redirect('login')
+
+@has_role_decorator("Admin")
+def listar_pedidos(request):
+    pedidos = Pedido.objects.all().order_by('-data_pedido')
+    return render(request, "pedidos_admin_list.html", {"pedidos": pedidos})
+
+@has_role_decorator("Admin")
+def pedidos_deletar(request, id):
+    pedido = get_object_or_404(Pedido, id=id)
+    pedido.delete()
+    messages.success(request, "Pedido deletado com sucesso!")
+    return redirect("listar_pedidos")
+
+def meus_pedidos(request):
+    pedidos = Pedido.objects.filter(cliente=request.user).order_by('-data_pedido')
+    return render(request, "meus_pedidos.html", {"pedidos": pedidos})
+
+@login_required(login_url="login")
+def deletar_meus_pedidos(request, id):
+    pedido = get_object_or_404(Pedido, id=id)
+    pedido.delete()
+    messages.success(request, "Pedido deletado com sucesso!")
+    return redirect("meus_pedidos")
